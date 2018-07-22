@@ -47,17 +47,17 @@ type Form struct {
 }
 
 type Input struct {
-	Type     string      `toml:"type"`
-	Name     string      `toml:"name"`
-	Value    string      `toml:"value"`
-	Pretty   string      `toml:"pretty"`
-	Prefix   string      `toml:"prefix"`
-	Required bool        `toml:"required"`
-	Disabled bool        `toml:"disabled"`
-	Options  interface{} `toml:"options"`
-	Size     int64       `toml:"size"`
-	Text     string      `toml:"text"`
-	Multiple bool        `toml:"multiple"`
+	Type     string   `toml:"type"`
+	Name     string   `toml:"name"`
+	Value    string   `toml:"value"`
+	Pretty   string   `toml:"pretty"`
+	Prefix   string   `toml:"prefix"`
+	Required bool     `toml:"required"`
+	Disabled bool     `toml:"disabled"`
+	Options  []string `toml:"options"`
+	Size     int64    `toml:"size"`
+	Text     string   `toml:"text"`
+	Multiple bool     `toml:"multiple"`
 }
 
 type Attribute struct {

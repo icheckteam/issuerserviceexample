@@ -21,7 +21,7 @@ more_styles = [
 
 [[forms]]
 name = "livestock_certificate"
-title = "Livestoke Certificate"
+title = "Livestock Certificate"
 
   [[forms.hidden]]
   name = "schema"

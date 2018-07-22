@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
+	"log"
 	"net/http"
 	"strconv"
 	"sync"
@@ -222,8 +223,13 @@ func (c *Client) init(seed string) error {
 		if err != nil {
 			return fmt.Errorf("store key error: %s", err.Error())
 		}
+		key, err = c.GetKey(c.Name)
+		if err != nil {
+			return fmt.Errorf("get key error: %s", err.Error())
+		}
 	}
 	acc, err := c.GetAccount(key.Address)
+	log.Printf("Init account %v", acc)
 	if err != nil {
 		return fmt.Errorf("get account key error: %s", err.Error())
 	}
