@@ -1,6 +1,9 @@
 package controllers
 
 import (
+	"strconv"
+	"time"
+
 	"github.com/icheckteam/icertifier.com/app"
 	"github.com/icheckteam/icertifier.com/app/config"
 	"github.com/icheckteam/icertifier.com/blockchain"
@@ -25,7 +28,6 @@ func (c App) Index() revel.Result {
 	c.ViewArgs["moreStyles"] = config.DefaultConfig.MoreStyles
 	c.ViewArgs["address"] = address
 	c.ViewArgs["form"] = config.DefaultConfig.Forms[0]
-
 	proof := blockchain.Proof{
 		AttributesMapper: map[string]string{},
 	}
@@ -45,10 +47,18 @@ func (c App) SubmitClaim() revel.Result {
 		Data:       map[string]string{},
 		Confidence: true,
 	}
-	for _, schema := range config.DefaultSchemas {
-		if schema.Name == c.Params.Form.Get("schema") {
+	for _, schema := range config.DefaultConfig.SchemaMappers {
+		if schema.For == c.Params.Form.Get("schema") {
 			for _, attr := range schema.Attributes {
-				cert.Data[attr] = c.Params.Form.Get(attr)
+				if attr.From == "request" {
+					cert.Data[attr.Name] = c.Params.Form.Get(attr.Source)
+				} else if attr.From == "literal" {
+					cert.Data[attr.Name] = c.Params.Form.Get(attr.Source)
+				} else if attr.From == "helper" {
+					if attr.Source == "now" {
+						cert.Data[attr.Name] = strconv.Itoa(int(time.Now().Unix()))
+					}
+				}
 			}
 		}
 	}

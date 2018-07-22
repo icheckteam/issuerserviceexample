@@ -1,0 +1,139 @@
+# Agent info
+template_root = "vietgap_org.index.html"
+name = "Vietgap"
+abbreviation = "Vietgap"
+jurisdiction_name = "United States"
+jurisdiction_abbreviation = "US"
+
+# Webpage info
+title = "Vietgap"
+description = " "
+explanation = " "
+
+more_styles = [
+  "css/vietgap.css"
+]
+
+# Forms:
+# 
+# These structures are used to build the forms
+# in the UI.
+
+[[forms]]
+name = "livestock_certificate"
+title = "Livestoke Certificate"
+
+  [[forms.hidden]]
+  name = "schema"
+  value = "livestock_certificate.vietgap"
+
+
+  [[forms.inputs]]
+  type = "text"
+  required = true
+  name = "company_name"
+  pretty = "Company name"
+
+  [[forms.inputs]]
+  type = "text"
+  required = true
+  name = "address"
+  pretty = "Address"
+
+  [[forms.inputs]]
+  type = "text"
+  required = true
+  name = "phone"
+  pretty = "Phone"
+
+  [[forms.inputs]]
+  type = "text"
+  required = true
+  name = "email"
+  pretty = "Email"
+
+  [[forms.inputs]]
+  type = "text"
+  required = true
+  name = "website"
+  pretty = "Webiste"
+
+  [[forms.inputs]]
+  type = "text"
+  required = true
+  name = "code"
+  pretty = "Code"
+
+  [[forms.inputs]]
+  type = "text"
+  required = true
+  name = "total_production_area"
+  pretty = "Total Production Area"
+
+  [[forms.inputs]]
+  type = "text"
+  required = true
+  name = "product_or_group"
+  pretty = "Product or Product group"
+
+
+  [[forms.inputs]]
+  type = "text"
+  required = true
+  name = "predictive_production"
+  pretty = "Predictive production"
+
+  [[forms.inputs]]
+  type = "text"
+  required = true
+  name = "predictive_production"
+  pretty = "Predictive production"
+
+# Schema mappers:
+# 
+# One for each schema type.
+# 
+# Each mapper is invoked when a request is received
+# which contains value "schema" which maps to "for"
+# property.
+
+# ***** TODO *****
+
+[[schema_mappers]]
+for = "livestock_certificate.vietgap"
+
+
+  [[schema_mappers.attributes]]
+  name = "effective_date"
+  from ="helper"
+  source = "now"
+
+  [[schema_mappers.attributes]]
+  name = "company_name"
+  from ="request"
+  source = "company_name"
+
+  [[schema_mappers.attributes]]
+  name = "address"
+  from ="request"
+  source = "address"
+
+
+  [[schema_mappers.attributes]]
+  name = "phone"
+  from ="request"
+  source = "phone"
+
+  [[schema_mappers.attributes]]
+  name = "email"
+  from ="request"
+  source = "email"
+
+  [[schema_mappers.attributes]]
+  name = "website"
+  from ="request"
+  source = "website"
+
+  [[schema_mappers.attributes]]
+  name = "end_date"
+  from ="literal"

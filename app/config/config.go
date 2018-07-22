@@ -6,8 +6,8 @@ import (
 	"io/ioutil"
 	"os"
 
-	"github.com/BurntSushi/toml"
 	"github.com/icheckteam/icertifier.com/blockchain"
+	"github.com/pelletier/go-toml"
 )
 
 var DefaultConfig Config
@@ -24,10 +24,15 @@ type Config struct {
 	Description              string `toml:"description"`
 	Explanation              string `toml:"explanation"`
 
-	Forms         Froms       `toml:"forms"`
-	MoreStyles    []string    `toml:"more_styles"`
-	MoreScripts   []string    `toml:"more_scripts"`
-	SchemaMappers []Attribute `toml:"schema_mappers"`
+	Forms         Froms          `toml:"forms"`
+	MoreStyles    []string       `toml:"more_styles"`
+	MoreScripts   []string       `toml:"more_scripts"`
+	SchemaMappers []SchemaMapper `toml:"schema_mappers"`
+}
+
+type SchemaMapper struct {
+	For        string      `toml:"for"`
+	Attributes []Attribute `toml:"attributes"`
 }
 
 type Froms []Form
@@ -71,7 +76,14 @@ type Schemas []Schema
 
 func loadConfig() Config {
 	var config Config
-	toml.DecodeFile(fmt.Sprintf("%s/config.toml", os.Getenv("TEMPLATE_PATH")), &config)
+	dat, err := ioutil.ReadFile(fmt.Sprintf("%s/config.toml", os.Getenv("TEMPLATE_PATH")))
+	if err != nil {
+		panic(err)
+	}
+	err = toml.Unmarshal(dat, &config)
+	if err != nil {
+		panic(err)
+	}
 	return config
 }
 

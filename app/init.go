@@ -16,7 +16,7 @@ var (
 	// BuildTime revel app build-time (ldflags)
 	BuildTime string
 
-	Blockchain blockchain.Client
+	Blockchain *blockchain.Client
 )
 
 func InitBlockchain() {

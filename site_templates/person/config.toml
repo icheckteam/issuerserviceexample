@@ -60,16 +60,6 @@ title = "Gov ID Request"
 [[schema_mappers]]
 for = "entity.person"
   [[schema_mappers.attributes]]
-  name = "legal_entity_id"
-  from ="helper"
-  source = "uuid"
-
-  [[schema_mappers.attributes]]
-  name = "corp_num"
-  from ="previous"
-  source = "legal_entity_id"
-
-  [[schema_mappers.attributes]]
   name = "first_name"
   from ="request"
   source = "first_name"

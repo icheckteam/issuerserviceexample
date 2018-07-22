@@ -1,0 +1,19 @@
+[
+  {
+    "name": "livestock_certificate.vietgap",
+    "version": "0.0.1",
+    "attr_names": [
+      "company_name",
+      "address",
+      "phone",
+      "email",
+      "website",
+      "code",
+      "total_production_area",
+      "product_or_group",
+      "predictive_production",
+      "effective_date",
+      "end_date"
+    ]
+  }
+]

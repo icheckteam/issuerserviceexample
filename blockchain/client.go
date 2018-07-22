@@ -7,7 +7,8 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
-	"time"
+	"strconv"
+	"sync"
 )
 
 type Cert struct {
@@ -49,10 +50,11 @@ type Client struct {
 	Seed     string
 	Address  string
 	baseReq  baseReq
+	mux      sync.Mutex
 }
 
-func NewClient(api, secret, name, password string) Client {
-	cli := Client{
+func NewClient(api, secret, name, password string) *Client {
+	cli := &Client{
 		API:      api,
 		Name:     name,
 		Password: password,
@@ -127,7 +129,7 @@ type UpdateKeyBody struct {
 }
 
 // GetIdent ...
-func (c Client) GetIdent(identID string) (*Identity, error) {
+func (c *Client) GetIdent(identID string) (*Identity, error) {
 	var ident Identity
 	_, body, err := c.Do("GET", fmt.Sprintf("/identities/%s", identID), nil)
 	if err != nil {
@@ -141,7 +143,7 @@ func (c Client) GetIdent(identID string) (*Identity, error) {
 }
 
 // GetCerts get all certs
-func (c Client) GetProof(addr string, proofRequest ProofRequest) (Proof, error) {
+func (c *Client) GetProof(addr string, proofRequest ProofRequest) (Proof, error) {
 	proof := Proof{
 		AttributesMapper: map[string]string{},
 	}
@@ -183,8 +185,7 @@ func (c Client) GetProof(addr string, proofRequest ProofRequest) (Proof, error) 
 }
 
 // GetCerts get all certs
-func (c Client) Claim(addr string, certs []CertValue) error {
-	time.Sleep(5 * time.Second)
+func (c *Client) Claim(addr string, certs []CertValue) error {
 	b, err := json.Marshal(claimBody{
 		BaseRequest: c.baseReq,
 		Values:      certs,
@@ -197,7 +198,7 @@ func (c Client) Claim(addr string, certs []CertValue) error {
 }
 
 // GetCerts get all certs
-func (c Client) GetAccount(addr string) (AccountReponse, error) {
+func (c *Client) GetAccount(addr string) (AccountReponse, error) {
 	acc := AccountReponse{}
 	_, body, err := c.Do("GET", fmt.Sprintf("/accounts/%s", addr), nil)
 	if err != nil {
@@ -226,7 +227,6 @@ func (c *Client) init(seed string) error {
 	if err != nil {
 		return fmt.Errorf("get account key error: %s", err.Error())
 	}
-	fmt.Printf("$$$$ + %v", acc)
 	c.Address = key.Address
 	c.baseReq = baseReq{
 		Name:          c.Name,
@@ -246,7 +246,7 @@ type Key struct {
 	PubKey  string `json:"pub_key"`
 }
 
-func (c Client) GetKey(name string) (Key, error) {
+func (c *Client) GetKey(name string) (Key, error) {
 	key := Key{}
 	_, body, err := c.Do("GET", fmt.Sprintf("/keys/%s", name), nil)
 	if err != nil {
@@ -259,7 +259,7 @@ func (c Client) GetKey(name string) (Key, error) {
 	return key, nil
 }
 
-func (c Client) StoreKey(body StoreSeedBody) error {
+func (c *Client) StoreKey(body StoreSeedBody) error {
 	b, err := json.Marshal(body)
 	if err != nil {
 		return err
@@ -272,7 +272,7 @@ func (c Client) StoreKey(body StoreSeedBody) error {
 	return nil
 }
 
-func (c Client) UpdateKey(name string, body UpdateKeyBody) error {
+func (c *Client) UpdateKey(name string, body UpdateKeyBody) error {
 	b, err := json.Marshal(body)
 	if err != nil {
 		return err
@@ -285,16 +285,25 @@ func (c Client) UpdateKey(name string, body UpdateKeyBody) error {
 	return nil
 }
 
-func (c Client) SendTransaction(method, path string, payload []byte) (*http.Response, []byte, error) {
-	acc, err := c.GetAccount(c.Address)
+func (c *Client) SendTransaction(method, path string, payload []byte) (*http.Response, []byte, error) {
+	sequence, err := strconv.Atoi(c.baseReq.Sequence)
 	if err != nil {
 		return nil, nil, err
 	}
-	c.baseReq.Sequence = acc.AccountValueReponse.BaseAccount.Sequence
-	return c.Do(method, path, payload)
+
+	res, body, err := c.Do(method, path, payload)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	c.mux.Lock()
+	sequence++
+	c.baseReq.Sequence = strconv.Itoa(sequence)
+	c.mux.Unlock()
+	return res, body, nil
 }
 
-func (c Client) Do(method, path string, payload []byte) (*http.Response, []byte, error) {
+func (c *Client) Do(method, path string, payload []byte) (*http.Response, []byte, error) {
 	var res *http.Response
 	var err error
 	url := fmt.Sprintf("%v%v", c.API, path)
