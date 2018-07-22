@@ -1,0 +1,16 @@
+[
+  {
+    "name": "job_application.acme_corp",
+    "version": "0.0.1",
+    "attr_names": [
+      "effective_date",
+
+      "first_name",
+      "last_name",
+      "phone_number",
+      "degree",
+      "status",
+      "ssn"
+    ]
+  }
+]

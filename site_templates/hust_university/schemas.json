@@ -1,0 +1,14 @@
+[
+  {
+    "name": "transcript.hust_university",
+    "version": "0.0.1",
+    "attr_names": [
+      "first_name",
+      "last_name",
+      "ssn",
+      "degree",
+      "year",
+      "status"
+    ]
+  }
+]

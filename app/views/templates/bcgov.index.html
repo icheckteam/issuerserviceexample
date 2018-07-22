@@ -1,0 +1,23 @@
+{{template "header.html" .}}
+{{$out := .}}
+<header class="jumbotron jumbotron-fluid govid-banner">
+  <div class="container">
+    <div class="row">
+      <h1>{{.name}}</h1>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+  <div class="row">
+    <div class="span6">
+      {{template "flash.html" .}}
+    </div>
+
+    <div class="form">
+      {{template "bootstrap.form.html" .}}
+    </div>
+  </div>
+</div>
+
+{{template "footer.html" .}}

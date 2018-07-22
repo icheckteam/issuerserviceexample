@@ -1,0 +1,125 @@
+# Agent info
+template_root = "hust_university.index.html"
+name = "Hanoi University of Science and Technology"
+abbreviation = "Hust"
+jurisdiction_name = "Hust"
+jurisdiction_abbreviation = "HUT"
+
+# Webpage info
+title = "Hanoi University of Science and Technology"
+description = "Hanoi University of Science and Technology"
+
+more_styles = [
+  "css/hust_university.css"
+]
+
+# Forms:
+#
+# These structures are used to build the forms
+# in the UI.
+
+[[forms]]
+name = "transcript"
+title = "Transcript Request"
+explanation = "Use the form below to register as a student of Hanoi University of Science and Technology"
+
+  [[forms.hidden]]
+  name = "schema"
+  value = "transcript.hust_university"
+
+  [[forms.inputs]]
+  type = "text"
+  required = true
+  name = "first_name"
+  pretty = "Student First Name"
+
+  [[forms.inputs]]
+  type = "text"
+  required = true
+  name = "last_name"
+  pretty = "Student Last Name"
+
+  [[forms.inputs]]
+  type = "text"
+  required = true
+  name = "ssn"
+  pretty = "SSN"
+
+  [[forms.inputs]]
+  type = "select"
+  options = [
+    "",
+    "Certificate",
+    "AA",
+    "BS",
+    "MS",
+    "PhD"
+  ]
+  required = true
+  name = "degree"
+  pretty = "Degree"
+
+  [[forms.inputs]]
+  type = "text"
+  required = true
+  name = "year"
+  pretty = "Year"
+
+  [[forms.inputs]]
+  type = "select"
+  options = [
+    "",
+    "Graduated",
+    "Current",
+    "Dropout",
+    "CO"
+  ]
+  required = true
+  name = "status"
+  pretty = "Status"
+
+
+# Schema mappers:
+#
+# One for each schema type.
+#
+# Each mapper is invoked when a request is received
+# which contains value "schema" which maps to "for"
+# property.
+
+[[schema_mappers]]
+for = "transcript.hust_university"
+
+
+
+  [[schema_mappers.attributes]]
+  name = "effective_date"
+  from ="helper"
+  source = "now"
+
+  [[schema_mappers.attributes]]
+  name = "first_name"
+  from ="request"
+  source = "first_name"
+
+  [[schema_mappers.attributes]]
+  name = "last_name"
+  from ="request"
+  source = "last_name"
+
+  [[schema_mappers.attributes]]
+  name = "ssn"
+  from ="request"
+  source = "ssn"
+
+  [[schema_mappers.attributes]]
+  name = "degree"
+  from ="request"
+  source = "degree"
+
+  [[schema_mappers.attributes]]
+  name = "status"
+  from ="request"
+  source = "status"
+
+

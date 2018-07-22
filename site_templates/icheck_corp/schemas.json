@@ -1,0 +1,14 @@
+[
+  {
+    "name": "job_certificate.icheck_corp",
+    "version": "0.0.1",
+    "attr_names": [
+      "effective_date",
+      "first_name",
+      "last_name",
+      "employee_status",
+      "experience",
+      "salary_bracket"
+    ]
+  }
+]

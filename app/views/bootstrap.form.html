@@ -1,0 +1,158 @@
+{{ $proof := .proof }}
+{{ $address := .address }}
+<form action="/submit_claim" method="post" accept-charset="utf-8" name="{{ .form.Name }}" class="form well {{ .form.Class }}">
+  <fieldset>
+    <legend>{{ .form.Title }}</legend>
+    <input type="hidden" name="address" value="{{ $address }}">
+    {{range .form.Hidden }}
+      <input type="hidden" name="{{ .Name }}" value="{{ .Value }}">
+    {{end}}
+
+    <div class="row">
+      <div class="col-md-8 col-md-push-2">
+        {{range .form.Inputs }}
+          <div class="form-group">
+            {{if .Required}}
+              <label class="control-label required" for="{{ .Prefix }}line1-input"><span class="field-name">{{ .Pretty }}</span>
+              {{if ne .Type "radio"}} <span class="required">(required)</span>{{end}}</label>
+            {{else}}
+              <label class="control-label" for="{{ .Name }}-input"><span class="field-name">{{ .Pretty}}</span></label>
+            {{end}}
+
+            {{if eq .Type  "address"}} 
+              <div class="form-address" id="{{ .Name }}-input">
+                <div class="row form-field">
+                  <div class="col-sm-12">
+                    <label class="control-label" for="{{ .Prefix }}line1-input"><span class="field-name">Street Address</span></label>
+                    <input class="form-control js-typeahead" type="text"
+                      name="{{ .Prefix }}address_line_1"
+                      id="{{ .Prefix }}line1-input"
+                      autocomplete="off"
+                      placeholder="Type to search"
+                      value="{{$proof.AttributesMapper.address_line_1}}"
+                      {{ if .Required }}required{{end}}
+                      {{ if .Disabled }}disabled{{end}}>
+                  </div>
+                </div> <br />
+                <div class="row form-field">
+                  <div class="col-sm-12">
+                    <input class="form-control mrgn-tp-sm" type="text"
+                      name="{{ .Prefix }}address_line_2"
+                      id="{{ .Prefix }}line2-input"
+                      value="{{$proof.AttributesMapper.address_line_2}}"
+                      {{ if .Disabled}} disabled {{ end }} />
+                  </div>
+                </div><br />
+                <div class="row form-field">
+                  <div class="col-sm-6">
+                    <label class="control-label" for="{{ .Prefix }}city-input"><span class="field-name">City</span></label>
+                    <input class="form-control" type="text"
+                        name="{{ .Prefix }}city"
+                        id="{{ .Prefix }}city-input"
+                        value="{{$proof.AttributesMapper.city}}"
+                        {{ if .Required}} required {{ end }}
+                        {{ if .Disabled}} disabled {{ end }}>
+                  </div>
+                  <div class="col-sm-6">
+                      <label class="control-label" for="{{ .Prefix }}province-input"><span class="field-name">State/Province</span></label>
+                      <input class="form-control" type="text"
+                        name="{{ .Prefix }}province"
+                        id="{{ .Prefix }}province-input"
+                        value="{{$proof.AttributesMapper.province}}"
+                        {{ if .Required}} required {{ end }}
+                        {{ if .Disabled}} disabled {{ end }}/>
+                  </div>
+                </div>
+              </div>
+            {{else if eq .Type  "select"}} 
+              <select
+                class="form-control"
+                name="{{ .Name }}"
+                id="{{ .Name }}-input"
+                {{ if .Multiple}} disabled {{ end }}
+                {{ if .Disabled}} disabled {{ end }}
+                {{ if .Required}} required {{ end }}>
+                {{range .Options}}
+                  <option value="{{ . }}">
+                    {{ . }}
+                  </option>
+                {{end}}
+              </select>
+            {{else if eq .Type  "radio"}} 
+              {{range .Options}}
+                <div class="{{ .Type }}">
+                  <input
+                    name="{{ .Name }}"
+                    value="{{.Value}}"
+                    type="{{ .Type }}"
+                    id="{{ .Name }}-{{ .value }}-input"
+                    value="{{ .value }}"
+                    {{ if .Disabled}} disabled {{ end }}
+                  ><label for="{{ .Name }}-{{ .value }}-input">{{ .pretty }}</label>
+                </div>
+              {{end}}
+            {{else if eq .Type  "checkbox"}} 
+              <div class="{{ .Type }}">
+                <input
+                  name="{{ .Name }}"
+                  type="{{ .Type }}"
+                  value="{{.Value}}"
+                  id="{{ .Name }}-input"
+                  {{ if .Disabled}} checked {{ end }}
+                  {{ if .Disabled}} disabled {{ end }}
+                ><label for="{{ .Name }}-input">{{ .Text }}</label>
+            {{else if eq .Type  "textarea"}} 
+              <textarea
+                class="form-control"
+                name="{{ .Name }}"
+                type="{{ .Type }}"
+                id="{{ .Name }}-input"
+                value="{{.Value}}"
+                {{ if .Disabled}} disabled {{ end }}
+                ></textarea>
+            {{else if eq .Type  "open_close"}} 
+              <div class="form-inline">
+                <input
+                    class="form-control"
+                    type="time"
+                    name="{{ .Name }}[]"
+                    size="5"
+                    id="{{ .Name }}-open-input"
+                    placeholder="open"
+                    value="{{.Value}}"
+                    {{ if .Disabled}} checked {{ end }}
+                    {{ if .Disabled}} disabled {{ end }}
+                ><span style="padding: 0 1.5em">to</span><input
+                    class="form-control"
+                    type="time"
+                    name="{{ .Name }}[]"
+                    size="5"
+                    id="{{.Name }}-close-input"
+                    placeholder="close"
+                    {{ if .Disabled}} checked {{ end }}
+                    {{ if .Disabled}} disabled {{ end }}
+                >
+              </div>
+
+            {{else}}
+              <input
+                class="form-control"
+                type="{{ .Type }}"
+                name="{{ .Name }}"
+                size="{{ .Size }}"
+                id="{{ .Name }}-input"
+                value="{{ get_item $proof.AttributesMapper .Name}}"
+                {{ if .Disabled}} checked {{ end }}
+                {{ if .Disabled}} disabled {{ end }}
+              >
+            {{end}}
+          </div>
+        {{end}}
+        <button type="submit" class="btn submit-button">
+          <i class="fas fa-circle-notch fa-spin loader" hidden></i>
+          Submit
+        </button>
+      </div>
+    </div>
+  </fieldset>
+</form>
