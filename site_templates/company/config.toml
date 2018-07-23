@@ -99,6 +99,16 @@ for = "entry.company"
   source = "now"
 
   [[schema_mappers.attributes]]
+  name = "person_first_name"
+  from ="request"
+  source = "person_first_name"
+
+  [[schema_mappers.attributes]]
+  name = "person_last_name"
+  from ="request"
+  source = "person_last_name"
+
+  [[schema_mappers.attributes]]
   name = "company_name"
   from ="request"
   source = "company_name"

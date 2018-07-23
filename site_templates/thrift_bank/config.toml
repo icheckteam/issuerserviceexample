@@ -112,3 +112,8 @@ for = "loan_application.thrift_bank"
   name = "experience"
   from ="request"
   source = "experience"
+
+  [[schema_mappers.attributes]]
+  name = "salary_bracket"
+  from ="request"
+  source = "salary_bracket"

@@ -14,7 +14,7 @@
         }
       ]
     },
-    "irst_name": {
+    "first_name": {
       "name": "first_name",
       "restrictions": [
         {

@@ -28,11 +28,7 @@ title = "Job Application"
   name = "schema"
   value = "job_application.icheck_corp"
 
-  [[forms.inputs]]
-  type = "hidden"
-  #required = true
-  name = "legal_entity_id"
-  #pretty = "legal_entity_id"
+
 
   [[forms.inputs]]
   type = "text"
@@ -80,14 +76,7 @@ title = "Job Application"
 
 
 [[schema_mappers]]
-for = "job_application.acme_corp"
-
-
-  [[schema_mappers.attributes]]
-  name = "legal_entity_id"
-  from ="request"
-  source = "legal_entity_id"
-
+for = "job_application.icheck_corp"
   [[schema_mappers.attributes]]
   name = "effective_date"
   from ="helper"

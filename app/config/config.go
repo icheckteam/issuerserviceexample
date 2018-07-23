@@ -7,6 +7,7 @@ import (
 	"os"
 
 	"github.com/icheckteam/icertifier.com/blockchain"
+	"github.com/monax/monax/log"
 	"github.com/pelletier/go-toml"
 )
 
@@ -89,14 +90,18 @@ func loadConfig() Config {
 
 func loadProofRequest() *blockchain.ProofRequest {
 	var config blockchain.ProofRequest
-	dat, _ := ioutil.ReadFile(fmt.Sprintf("%s/proof_request.json", os.Getenv("TEMPLATE_PATH")))
+	dat, err := ioutil.ReadFile(fmt.Sprintf("%s/proof_request.json", os.Getenv("TEMPLATE_PATH")))
+	if err != nil {
+		log.Errorf("load proof_request.json error :%s", err)
+	}
 	json.Unmarshal(dat, &config)
 	return &config
 }
 
 func loadSchemas() Schemas {
 	var config Schemas
-	dat, _ := ioutil.ReadFile(fmt.Sprintf("%s/schemas.json", os.Getenv("TEMPLATE_PATH")))
+	dat, err := ioutil.ReadFile(fmt.Sprintf("%s/schemas.json", os.Getenv("TEMPLATE_PATH")))
+	log.Errorf("load schemas.json error :%s", err)
 	json.Unmarshal(dat, &config)
 	return config
 }

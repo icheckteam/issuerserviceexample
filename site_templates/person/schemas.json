@@ -3,7 +3,6 @@
         "name": "entity.person",
         "version": "0.0.1",
         "attr_names": [
-            "legal_entity_id",
             "first_name",
             "last_name",
             "corp_num",

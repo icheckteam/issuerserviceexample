@@ -122,4 +122,16 @@ for = "transcript.hust_university"
   from ="request"
   source = "status"
 
+  [[schema_mappers.attributes]]
+  name = "year"
+  from ="request"
+  source = "year"
+
+
+  [[schema_mappers.attributes]]
+  name = "ssn"
+  from ="request"
+  source = "ssn"
+
+
 
