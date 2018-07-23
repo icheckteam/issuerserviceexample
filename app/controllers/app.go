@@ -62,9 +62,11 @@ func (c App) SubmitClaim() revel.Result {
 			}
 		}
 	}
-	err := app.Blockchain.Claim(addr, []blockchain.CertValue{cert})
+	result, err := app.Blockchain.Claim(addr, []blockchain.CertValue{cert})
 	if err != nil {
 		c.Flash.Error(err.Error())
+	} else {
+		c.Flash.Success(`Successful: block: <a href="http://125.212.225.51:4396/blocks/%s">%s</a>, tx hash: <a href="http://125.212.225.51:4396/txs/%s">%s</a>`, result.Height, result.Height, result.Hash, result.Hash)
 	}
 	return c.Redirect("/?address=%s", addr)
 }

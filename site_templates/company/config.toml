@@ -1,17 +1,17 @@
 # Agent info
-template_root = "vietgap_org.index.html"
-name = "Vietgap"
-abbreviation = "Vietgap"
-jurisdiction_name = "United States"
-jurisdiction_abbreviation = "US"
+template_root = "hapigov.index.html"
+name = "Sở kế hạch và đầu tư thành Phố Hà Nội"
+abbreviation = "Hapi"
+jurisdiction_name = "Vietnam"
+jurisdiction_abbreviation = "VN"
 
 # Webpage info
-title = "Vietgap"
+title = "Sở kế hạch và đầu tư thành Phố Hà Nội"
 description = " "
 explanation = " "
 
 more_styles = [
-  "css/vietgap.css"
+  "css/hapi.css"
 ]
 
 # Forms:
@@ -20,12 +20,12 @@ more_styles = [
 # in the UI.
 
 [[forms]]
-name = "livestock_certificate"
-title = "Livestock Certificate"
+name = "identity"
+title = "Chứng nhận thành lập công ty"
 
   [[forms.hidden]]
   name = "schema"
-  value = "livestock_certificate.vietgap"
+  value = "entry.company"
 
   [[forms.inputs]]
   type = "text"
@@ -39,6 +39,14 @@ title = "Livestock Certificate"
   name = "person_last_name"
   pretty = "Person Last Name"
 
+  
+
+  [[forms.inputs]]
+  type = "text"
+  required = true
+  name = "duns"
+  pretty = "DUNS Number"
+
 
   [[forms.inputs]]
   type = "text"
@@ -49,7 +57,7 @@ title = "Livestock Certificate"
   [[forms.inputs]]
   type = "text"
   required = true
-  name = "address"
+  name = "company_address"
   pretty = "Address"
 
   [[forms.inputs]]
@@ -70,31 +78,6 @@ title = "Livestock Certificate"
   name = "website"
   pretty = "Webiste"
 
-  [[forms.inputs]]
-  type = "text"
-  required = true
-  name = "registration_id"
-  pretty = "CB registration ID"
-
-  [[forms.inputs]]
-  type = "text"
-  required = true
-  name = "total_production_area"
-  pretty = "Total Production Area"
-
-  [[forms.inputs]]
-  type = "text"
-  required = true
-  name = "product_or_group"
-  pretty = "Product or Product group"
-
-
-  [[forms.inputs]]
-  type = "text"
-  required = true
-  name = "predictive_production"
-  pretty = "Predictive production"
-
 
 # Schema mappers:
 # 
@@ -107,7 +90,7 @@ title = "Livestock Certificate"
 # ***** TODO *****
 
 [[schema_mappers]]
-for = "livestock_certificate.vietgap"
+for = "entry.company"
 
 
   [[schema_mappers.attributes]]
@@ -121,9 +104,9 @@ for = "livestock_certificate.vietgap"
   source = "company_name"
 
   [[schema_mappers.attributes]]
-  name = "address"
+  name = "company_address"
   from ="request"
-  source = "address"
+  source = "company_address"
 
 
   [[schema_mappers.attributes]]
@@ -141,32 +124,10 @@ for = "livestock_certificate.vietgap"
   from ="request"
   source = "website"
 
-
   [[schema_mappers.attributes]]
-  name = "website"
+  name = "duns"
   from ="request"
-  source = "website"
-
-
-  [[schema_mappers.attributes]]
-  name = "registration_id"
-  from ="request"
-  source = "registration_id"
-
-  [[schema_mappers.attributes]]
-  name = "total_production_area"
-  from ="request"
-  source = "total_production_area"
-
-  [[schema_mappers.attributes]]
-  name = "predictive_production"
-  from ="request"
-  source = "predictive_production"
-
-  [[schema_mappers.attributes]]
-  name = "product_or_group"
-  from ="request"
-  source = "product_or_group"
+  source = "duns"
 
   [[schema_mappers.attributes]]
   name = "end_date"

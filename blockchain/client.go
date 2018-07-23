@@ -157,11 +157,11 @@ func (c *Client) GetProof(addr string, proofRequest ProofRequest) (Proof, error)
 	if err != nil {
 		return proof, err
 	}
-	for _, attr := range proofRequest.RequestedAttrs {
+	for name, attr := range proofRequest.RequestedAttrs {
 		for _, cert := range certs {
-			if proof.AttributesMapper[attr.Name] == "" {
+			if proof.AttributesMapper[name] == "" {
 				for _, schemaKey := range attr.Restrictions {
-					if proof.AttributesMapper[attr.Name] != "" {
+					if proof.AttributesMapper[name] != "" {
 						break
 					}
 
@@ -172,8 +172,8 @@ func (c *Client) GetProof(addr string, proofRequest ProofRequest) (Proof, error)
 					if schemaKey.Property != "" && cert.Property != schemaKey.Property {
 						continue
 					}
-					proof.AttributesMapper[attr.Name] = cert.Data[attr.Name]
-					proof.Attributes = append(proof.Attributes, attr.Name)
+					proof.AttributesMapper[name] = cert.Data[attr.Name]
+					proof.Attributes = append(proof.Attributes, name)
 					break
 				}
 			}
@@ -186,16 +186,16 @@ func (c *Client) GetProof(addr string, proofRequest ProofRequest) (Proof, error)
 }
 
 // GetCerts get all certs
-func (c *Client) Claim(addr string, certs []CertValue) error {
+func (c *Client) Claim(addr string, certs []CertValue) (*TxResult, error) {
 	b, err := json.Marshal(claimBody{
 		BaseRequest: c.baseReq,
 		Values:      certs,
 	})
 	if err != nil {
-		return err
+		return nil, err
 	}
-	_, _, err = c.SendTransaction("POST", fmt.Sprintf("/accounts/%s/certs", addr), b)
-	return err
+	_, result, err := c.SendTransaction("POST", fmt.Sprintf("/accounts/%s/certs", addr), b)
+	return result, err
 }
 
 // GetCerts get all certs
@@ -291,22 +291,54 @@ func (c *Client) UpdateKey(name string, body UpdateKeyBody) error {
 	return nil
 }
 
-func (c *Client) SendTransaction(method, path string, payload []byte) (*http.Response, []byte, error) {
+type TxResult struct {
+	Hash      string          `json:"hash"`
+	Height    string          `json:"height"`
+	CheckTx   CheckTxResponse `json:"check_tx"`
+	DeliverTx CheckTxResponse `json:"deliver_tx"`
+}
+
+type CheckTxResponse struct {
+	Code int64
+}
+
+func (c *Client) SendTransaction(method, path string, payload []byte) (*http.Response, *TxResult, error) {
 	sequence, err := strconv.Atoi(c.baseReq.Sequence)
 	if err != nil {
 		return nil, nil, err
 	}
+	c.mux.Lock()
+	sequence++
+	c.baseReq.Sequence = strconv.Itoa(sequence)
+	c.mux.Unlock()
+	res, result, err := c.sendTransaction(method, path, payload)
+	if err != nil {
+		c.mux.Lock()
+		sequence--
+		c.baseReq.Sequence = strconv.Itoa(sequence)
+		c.mux.Unlock()
+	}
+	return res, result, err
+}
+
+func (c *Client) sendTransaction(method, path string, payload []byte) (*http.Response, *TxResult, error) {
 
 	res, body, err := c.Do(method, path, payload)
 	if err != nil {
 		return nil, nil, err
 	}
-
-	c.mux.Lock()
-	sequence++
-	c.baseReq.Sequence = strconv.Itoa(sequence)
-	c.mux.Unlock()
-	return res, body, nil
+	result := &TxResult{}
+	err = json.Unmarshal(body, result)
+	if err != nil {
+		return nil, nil, fmt.Errorf("decode tx result error :%s", err)
+	}
+	if result.CheckTx.Code > 0 {
+		return nil, nil, fmt.Errorf("tx error code :%d", result.CheckTx.Code)
+	}
+	if result.DeliverTx.Code > 0 {
+		return nil, nil, fmt.Errorf("tx error code :%d", result.CheckTx.Code)
+	}
+	return res, result, nil
 }
 
 func (c *Client) Do(method, path string, payload []byte) (*http.Response, []byte, error) {

@@ -3,17 +3,14 @@
     "name": "livestock_certificate.vietgap",
     "version": "0.0.1",
     "attr_names": [
+      "person_first_name",
+      "person_last_name",
       "company_name",
-      "company_address",
+      "address",
       "phone",
       "email",
       "website",
-      "code",
-      "total_production_area",
-      "product_or_group",
-      "predictive_production",
-      "effective_date",
-      "end_date"
+      "duns"
     ]
   }
 ]

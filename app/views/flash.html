@@ -1,17 +1,17 @@
 {{if .flash.success}}
 <div class="alert alert-success">
-	{{.flash.success}}
+	{{ raw .flash.success}}
 </div>
 {{end}}
 
 {{if or .errors .flash.error}}
 <div class="alert alert-danger">
 	{{if .flash.error}}
-		{{.flash.error}}
+		{{raw .flash.error}}
 	{{end}}
 	<ul style="margin-top:10px;">
 		{{range .errors}}
-			<li>{{.}}</li>
+			<li>{{raw .}}</li>
 		{{end}}
 	</ul>
 </div>

@@ -14,7 +14,7 @@
         }
       ]
     },
-    "irst_name": {
+    "person_first_name": {
       "name": "first_name",
       "restrictions": [
         {
@@ -25,12 +25,78 @@
         }
       ]
     },
-    "last_name": {
+    "person_last_name": {
       "name": "last_name",
       "restrictions": [
         {
           "schema_key": {
             "name": "entity.person",
+            "version": "0.0.1"
+          }
+        }
+      ]
+    }, 
+    "company_name": {
+      "name": "company_name",
+      "restrictions": [
+        {
+          "schema_key": {
+            "name": "entity.company",
+            "version": "0.0.1"
+          }
+        }
+      ]
+    },
+    "company_address": {
+      "name": "address",
+      "restrictions": [
+        {
+          "schema_key": {
+            "name": "entity.company",
+            "version": "0.0.1"
+          }
+        }
+      ]
+    },
+    "email": {
+      "name": "email",
+      "restrictions": [
+        {
+          "schema_key": {
+            "name": "entity.company",
+            "version": "0.0.1"
+          }
+        }
+      ]
+    },
+    "website": {
+      "name": "website",
+      "restrictions": [
+        {
+          "schema_key": {
+            "name": "entity.company",
+            "version": "0.0.1"
+          }
+        }
+      ]
+    },
+    "phone": {
+      "name": "phone",
+      "restrictions": [
+        {
+          "schema_key": {
+            "name": "entity.company",
+            "version": "0.0.1"
+          }
+        }
+      ]
+    },
+    "duns": {
+      "name": "duns",
+      "restrictions": [
+        {
+          "schema_key": {
+            "name": "entity.company",
             "version": "0.0.1"
           }
         }
