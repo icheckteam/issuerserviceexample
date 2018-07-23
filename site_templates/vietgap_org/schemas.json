@@ -8,7 +8,7 @@
       "phone",
       "email",
       "website",
-      "code",
+      "registration_id",
       "total_production_area",
       "product_or_group",
       "predictive_production",

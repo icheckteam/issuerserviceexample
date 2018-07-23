@@ -21,12 +21,12 @@ type Form struct {
 
 func (c App) Index() revel.Result {
 	templateFile := "templates/" + config.DefaultConfig.TemplateRoot
-	address := c.Request.FormValue("address")
+	address := c.Request.FormValue("did")
 	c.ViewArgs["title"] = config.DefaultConfig.Title
 	c.ViewArgs["name"] = config.DefaultConfig.Name
 	c.ViewArgs["moreScripts"] = config.DefaultConfig.MoreScripts
 	c.ViewArgs["moreStyles"] = config.DefaultConfig.MoreStyles
-	c.ViewArgs["address"] = address
+	c.ViewArgs["did"] = address
 	c.ViewArgs["form"] = config.DefaultConfig.Forms[0]
 	proof := blockchain.Proof{
 		AttributesMapper: map[string]string{},
@@ -41,7 +41,7 @@ func (c App) Index() revel.Result {
 }
 
 func (c App) SubmitClaim() revel.Result {
-	addr := c.Params.Form.Get("address")
+	addr := c.Params.Form.Get("did")
 	cert := blockchain.CertValue{
 		Property:   c.Params.Form.Get("schema"),
 		Data:       map[string]string{},
@@ -68,5 +68,5 @@ func (c App) SubmitClaim() revel.Result {
 	} else {
 		c.Flash.Success(`Successful: block: <a href="http://125.212.225.51:4396/blocks/%s">%s</a>, tx hash: <a href="http://125.212.225.51:4396/txs/%s">%s</a>`, result.Height, result.Height, result.Hash, result.Hash)
 	}
-	return c.Redirect("/?address=%s", addr)
+	return c.Redirect("/?did=%s", addr)
 }

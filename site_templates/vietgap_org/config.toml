@@ -49,8 +49,8 @@ title = "Livestock Certificate"
   [[forms.inputs]]
   type = "text"
   required = true
-  name = "address"
-  pretty = "Address"
+  name = "company_address"
+  pretty = "Company Address"
 
   [[forms.inputs]]
   type = "text"
@@ -121,9 +121,9 @@ for = "livestock_certificate.vietgap"
   source = "company_name"
 
   [[schema_mappers.attributes]]
-  name = "address"
+  name = "company_address"
   from ="request"
-  source = "address"
+  source = "company_address"
 
 
   [[schema_mappers.attributes]]

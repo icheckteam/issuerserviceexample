@@ -1,9 +1,9 @@
 {{ $proof := .proof }}
-{{ $address := .address }}
+{{ $did := .did }}
 <form action="/submit_claim" method="post" accept-charset="utf-8" name="{{ .form.Name }}" class="form well {{ .form.Class }}">
   <fieldset>
     <legend>{{ .form.Title }}</legend>
-    <input type="hidden" name="address" value="{{ $address }}">
+    <input type="hidden" name="did" value="{{ $did }}">
     {{range .form.Hidden }}
       <input type="hidden" name="{{ .Name }}" value="{{ .Value }}">
     {{end}}

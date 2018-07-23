@@ -6,7 +6,7 @@
       "person_first_name",
       "person_last_name",
       "company_name",
-      "address",
+      "company_address",
       "phone",
       "email",
       "website",

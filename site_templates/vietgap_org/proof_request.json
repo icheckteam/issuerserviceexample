@@ -48,7 +48,7 @@
       ]
     },
     "company_address": {
-      "name": "address",
+      "name": "company_address",
       "restrictions": [
         {
           "schema_key": {
