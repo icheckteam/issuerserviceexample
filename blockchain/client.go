@@ -54,15 +54,16 @@ type Client struct {
 	mux      sync.Mutex
 }
 
-func NewClient(api, secret, name, password string) *Client {
+// NewClient ...
+func NewClient(api, ichainID, gas, secret, name, password string) *Client {
 	cli := &Client{
 		API:      api,
 		Name:     name,
 		Password: password,
 		Seed:     secret,
 		baseReq: baseReq{
-			ChainID: "ichain",
-			Gas:     "50000",
+			ChainID: ichainID,
+			Gas:     gas,
 		},
 	}
 	if err := cli.init(secret); err != nil {
@@ -234,14 +235,10 @@ func (c *Client) init(seed string) error {
 		return fmt.Errorf("get account key error: %s", err.Error())
 	}
 	c.Address = key.Address
-	c.baseReq = baseReq{
-		Name:          c.Name,
-		Password:      c.Password,
-		AccountNumber: acc.AccountValueReponse.BaseAccount.AccountNumber,
-		Sequence:      acc.AccountValueReponse.BaseAccount.Sequence,
-		ChainID:       "ichain",
-		Gas:           "50000",
-	}
+	c.baseReq.Name = c.Name
+	c.baseReq.Password = c.Password
+	c.baseReq.AccountNumber = acc.AccountValueReponse.BaseAccount.AccountNumber
+	c.baseReq.Sequence = acc.AccountValueReponse.BaseAccount.Sequence
 	return nil
 }
 

@@ -15,13 +15,16 @@ var (
 
 	// BuildTime revel app build-time (ldflags)
 	BuildTime string
-
+	// Blockchain ...
 	Blockchain *blockchain.Client
 )
 
+// InitBlockchain ...
 func InitBlockchain() {
 	Blockchain = blockchain.NewClient(
 		os.Getenv("LCD_API"),
+		os.Getenv("CHAIN_ID"),
+		os.Getenv("GAS"),
 		os.Getenv("KEY_SEED"),
 		os.Getenv("KEY_NAME"),
 		os.Getenv("KEY_PASSWORD"),

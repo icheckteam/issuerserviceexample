@@ -1,0 +1,107 @@
+{
+  "name": "food_safety.vfa",
+  "version": "1.0.0",
+  "nonce": "1986273812765872",
+  "requested_attrs": {
+    "effective_date": {
+      "name": "effective_date",
+      "restrictions": [
+        {
+          "schema_key": {
+            "name": "entity.person",
+            "version": "0.0.1"
+          }
+        }
+      ]
+    },
+    "person_first_name": {
+      "name": "first_name",
+      "restrictions": [
+        {
+          "schema_key": {
+            "name": "entity.person",
+            "version": "0.0.1"
+          }
+        }
+      ]
+    },
+    "person_last_name": {
+      "name": "last_name",
+      "restrictions": [
+        {
+          "schema_key": {
+            "name": "entity.person",
+            "version": "0.0.1"
+          }
+        }
+      ]
+    }, 
+    "company_name": {
+      "name": "company_name",
+      "restrictions": [
+        {
+          "schema_key": {
+            "name": "entity.company",
+            "version": "0.0.1"
+          }
+        }
+      ]
+    },
+    "company_address": {
+      "name": "company_address",
+      "restrictions": [
+        {
+          "schema_key": {
+            "name": "entity.company",
+            "version": "0.0.1"
+          }
+        }
+      ]
+    },
+    "email": {
+      "name": "email",
+      "restrictions": [
+        {
+          "schema_key": {
+            "name": "entity.company",
+            "version": "0.0.1"
+          }
+        }
+      ]
+    },
+    "website": {
+      "name": "website",
+      "restrictions": [
+        {
+          "schema_key": {
+            "name": "entity.company",
+            "version": "0.0.1"
+          }
+        }
+      ]
+    },
+    "phone": {
+      "name": "phone",
+      "restrictions": [
+        {
+          "schema_key": {
+            "name": "entity.company",
+            "version": "0.0.1"
+          }
+        }
+      ]
+    },
+    "duns": {
+      "name": "duns",
+      "restrictions": [
+        {
+          "schema_key": {
+            "name": "entity.company",
+            "version": "0.0.1"
+          }
+        }
+      ]
+    }
+  },
+  "requested_predicates": {}
+}

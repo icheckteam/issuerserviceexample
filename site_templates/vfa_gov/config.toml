@@ -1,0 +1,163 @@
+# Agent info
+template_root = "vfa_gov.index.html"
+name = "Cục an toàn thực phẩm"
+abbreviation = "Cục an toàn thực phẩm"
+jurisdiction_name = "Viet Nam"
+jurisdiction_abbreviation = "VN"
+
+# Webpage info
+title = "Cục an toàn thực phẩm"
+description = " "
+explanation = " "
+
+more_styles = [
+  "css/vfa.css"
+]
+
+# Forms:
+# 
+# These structures are used to build the forms
+# in the UI.
+
+[[forms]]
+name = "food_safety"
+title = "Chứng nhận đạt tiêu chuẩn thực phẩm an toàn"
+
+  [[forms.hidden]]
+  name = "schema"
+  value = "food_safety.vfa"
+
+  [[forms.inputs]]
+  type = "text"
+  required = true
+  name = "person_first_name"
+  pretty = "Tên chủ sở hữu"
+
+  [[forms.inputs]]
+  type = "text"
+  required = true
+  name = "person_last_name"
+  pretty = "Họ chủ sở hữu"
+
+
+  [[forms.inputs]]
+  type = "text"
+  required = true
+  name = "company_name"
+  pretty = "Tên công ty"
+
+  [[forms.inputs]]
+  type = "text"
+  required = true
+  name = "company_address"
+  pretty = "Địa chỉ công ty"
+
+  [[forms.inputs]]
+  type = "text"
+  required = true
+  name = "phone"
+  pretty = "Số điện thoại"
+
+  [[forms.inputs]]
+  type = "text"
+  required = true
+  name = "email"
+  pretty = "Email"
+
+  [[forms.inputs]]
+  type = "text"
+  required = true
+  name = "website"
+  pretty = "Webiste"
+
+  [[forms.inputs]]
+  type = "text"
+  required = true
+  name = "registration_id"
+  pretty = "CB registration ID"
+
+
+  [[forms.inputs]]
+  type = "text"
+  required = true
+  name = "product_or_group"
+  pretty = "Sản phẩm hoặc nhóm sản phẩm"
+
+
+  [[forms.inputs]]
+  type = "text"
+  required = true
+  name = "predictive_production"
+  pretty = "Công suất dự kiến con/ngày"
+
+
+# Schema mappers:
+# 
+# One for each schema type.
+# 
+# Each mapper is invoked when a request is received
+# which contains value "schema" which maps to "for"
+# property.
+
+# ***** TODO *****
+
+[[schema_mappers]]
+for = "food_safety.vfa"
+
+
+  [[schema_mappers.attributes]]
+  name = "effective_date"
+  from ="helper"
+  source = "now"
+
+  [[schema_mappers.attributes]]
+  name = "company_name"
+  from ="request"
+  source = "company_name"
+
+  [[schema_mappers.attributes]]
+  name = "company_address"
+  from ="request"
+  source = "company_address"
+
+
+  [[schema_mappers.attributes]]
+  name = "phone"
+  from ="request"
+  source = "phone"
+
+  [[schema_mappers.attributes]]
+  name = "email"
+  from ="request"
+  source = "email"
+
+  [[schema_mappers.attributes]]
+  name = "website"
+  from ="request"
+  source = "website"
+
+
+  [[schema_mappers.attributes]]
+  name = "website"
+  from ="request"
+  source = "website"
+
+
+  [[schema_mappers.attributes]]
+  name = "registration_id"
+  from ="request"
+  source = "registration_id"
+
+  [[schema_mappers.attributes]]
+  name = "predictive_production"
+  from ="request"
+  source = "predictive_production"
+
+  [[schema_mappers.attributes]]
+  name = "product_or_group"
+  from ="request"
+  source = "product_or_group"
+
+  [[schema_mappers.attributes]]
+  name = "end_date"
+  from ="literal"

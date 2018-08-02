@@ -1,0 +1,18 @@
+[
+  {
+    "name": "food_safety.vfa",
+    "version": "0.0.1",
+    "attr_names": [
+      "company_name",
+      "company_address",
+      "phone",
+      "email",
+      "website",
+      "registration_id",
+      "product_or_group",
+      "predictive_production",
+      "effective_date",
+      "end_date"
+    ]
+  }
+]
